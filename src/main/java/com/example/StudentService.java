@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -29,6 +30,10 @@ public class StudentService {
 
     public Page<Student> getStudents(PageRequest pageRequest) {
         return studentRepository.findAll(pageRequest);
+    }
+
+    public Page<Student> getStudentsByCountry(String country, Pageable pageable) {
+        return studentRepository.findByCountry(country, pageable);
     }
 
     public Optional<Student> getStudentByEmail(String email) {

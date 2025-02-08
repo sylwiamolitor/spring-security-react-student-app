@@ -89,6 +89,25 @@ public class StudentController {
         return ResponseEntity.ok(studentService.updateStudent(studentId, studentMapper.studentDTOToStudent(student)));
     }
 
+    @GetMapping(path = "country/{country}")
+    @Operation(summary = "Method for getting students by country (using pagination)")
+    public ResponseEntity<Page<StudentDTO>> getStudentsByCountry(
+            @PathVariable("country") String country,
+            @RequestParam(value = "offset", required = false) Integer offset,
+            @RequestParam(value = "pageSize", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", required = false) String sortBy
+    ) {
+        if (offset == null)
+            offset = 0;
+        if (pageSize == null)
+            pageSize = 10;
+        if (StringUtils.isEmpty(sortBy))
+            sortBy = "id";
+        return ResponseEntity.ok(
+                (studentService.getStudentsByCountry(country, PageRequest.of(offset, pageSize, Sort.by(sortBy)))
+                        .map(studentMapper::studentToStudentDTO)));
+    }
+
     @GetMapping(path = "regionsByCountry/{studentId}")
     @Operation(summary = "Method for getting students' regions")
     public ResponseEntity<PageResponseDTO<RegionAndSubregionDTO>> getRegionsByStudentId(

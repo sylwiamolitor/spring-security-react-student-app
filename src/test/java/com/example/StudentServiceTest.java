@@ -10,17 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +59,20 @@ public class StudentServiceTest {
 
         verify(studentRepository).findAll(pageRequest);
         assertThat(studentPage.getSize()).isEqualTo(result.getSize());
+    }
+
+    @Test
+    void givenCountry_whenGetStudents_thenReturnStudentWithCountry() {
+        String country = "Czechia";
+        List<Student> students = new ArrayList<>();
+        students.add(basicStudent);
+        Page<Student> expectedStudentPage = new PageImpl<>(students);
+        Pageable pageable = Pageable.ofSize(10);
+        when(studentRepository.findByCountry(country, pageable)).thenReturn(expectedStudentPage);
+        Page<Student> actualStudentPage = studentService.getStudentsByCountry("Czechia", pageable);
+
+        assertEquals(1, actualStudentPage.getContent().size());
+        assertThat(expectedStudentPage).isEqualTo(actualStudentPage);
     }
 
     @Test
