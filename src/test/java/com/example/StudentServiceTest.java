@@ -62,6 +62,19 @@ public class StudentServiceTest {
     }
 
     @Test
+    void whenGetStudentsWithCountry_thenReturnStudentWithCountry() {
+        List<Student> students = new ArrayList<>();
+        students.add(basicStudent);
+        Page<Student> expectedStudentPage = new PageImpl<>(students);
+        Pageable pageable = Pageable.ofSize(10);
+        when(studentRepository.findByCountryIsNotNullOrderByCountryAscIdAsc(pageable)).thenReturn(expectedStudentPage);
+        Page<Student> actualStudentPage = studentService.getStudentsWithCountry(pageable);
+
+        assertEquals(1, actualStudentPage.getContent().size());
+        assertThat(expectedStudentPage).isEqualTo(actualStudentPage);
+    }
+
+    @Test
     void givenCountry_whenGetStudents_thenReturnStudentWithCountry() {
         String country = "Czechia";
         List<Student> students = new ArrayList<>();

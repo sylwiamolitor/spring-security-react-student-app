@@ -36,6 +36,10 @@ public class StudentService {
         return studentRepository.findByCountry(country, pageable);
     }
 
+    public Page<Student> getStudentsWithCountry(Pageable pageable) {
+        return studentRepository.findByCountryIsNotNullOrderByCountryAscIdAsc(pageable);
+    }
+
     public Optional<Student> getStudentByEmail(String email) {
         return studentRepository.findByEmail(email)
                 .stream()

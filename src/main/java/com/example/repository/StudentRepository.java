@@ -16,6 +16,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Operation(summary = "Query for finding students by his/her email address")
     Optional<Student> findByEmail(String email);
 
-    @Operation(summary = "Query for finding students by his/her email country")
+    @Operation(summary = "Query for finding students by his/her country")
     Page<Student> findByCountry(String country, Pageable pageable);
+
+    @Operation(summary = "Query for finding students with country")
+    Page<Student> findByCountryIsNotNullOrderByCountryAscIdAsc(Pageable pageable);
 }
