@@ -54,9 +54,21 @@ services:
     networks:
       - my-network
 
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: always
+    networks:
+      - my-network
+
 volumes:
   db:
     driver: local
+  jenkins_home:
 
 networks:
   my-network:
