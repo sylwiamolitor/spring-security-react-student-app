@@ -6,17 +6,17 @@ import java.text.SimpleDateFormat;
 public class DateValidator {
     public static boolean isValid(final String date) {
 
-        boolean valid;
+        if (date == null || date.isBlank() || "null".equalsIgnoreCase(date.trim())) {
+            return false;
+        }
 
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            formatter.setLenient(false);
             formatter.parse(date);
-            valid = true;
-
+            return true;
         } catch (ParseException e) {
-            valid = false;
+            return false;
         }
-
-        return valid;
     }
 }

@@ -68,11 +68,10 @@ public class StudentController {
 
     @GetMapping(path = "id/{id}")
     @Operation(summary = "Method for getting student's country by his/her id")
-    public ResponseEntity<Optional<String>> getCountryById(@PathVariable("id") Long id) {
+    public ResponseEntity<String> getCountryById(@PathVariable("id") Long id) {
         Optional<String> country = studentService.getCountryByStudentId(id);
-        if (country.isPresent())
-            return ResponseEntity.ok(studentService.getCountryByStudentId(id));
-        return ResponseEntity.notFound().build();
+        return country.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "{studentId}")
@@ -145,6 +144,9 @@ public class StudentController {
 
         String uri = "https://restcountries.com/v3.1/name/" + country.get();
         ApiDTO[] apiObj = restTemplate.getForObject(uri, ApiDTO[].class);
+        if (apiObj == null) {
+            return ResponseEntity.notFound().build();
+        }
         Collection<RegionAndSubregionDTO> currentRegions = studentService.mapApiToRegion(apiObj, country.get());
         List<RegionAndSubregionDTO> regionsList = new ArrayList<>(currentRegions);
 
