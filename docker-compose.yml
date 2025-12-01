@@ -1,8 +1,6 @@
-version: '2'
-
 services:
   db:
-    image: postgres:15.6-alpine
+    image: postgres:18
     container_name: db
     restart: always
     environment:
@@ -12,7 +10,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/18/docker
     networks:
       - my-network
 
@@ -33,7 +31,7 @@ services:
       - SPRING_JPA_SHOW_SQL=true
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
-      - JWT_SECRET=${SECRET_KEY}
+      - SECRET_KEY=${SECRET_KEY}
     networks:
       - my-network
 
@@ -51,17 +49,6 @@ services:
       - '/frontend/node_modules'
     stdin_open: true
     command: npm start
-    networks:
-      - my-network
-
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-    restart: always
     networks:
       - my-network
 
