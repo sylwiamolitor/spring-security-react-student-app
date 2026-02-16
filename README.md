@@ -32,12 +32,12 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 - User registration and authentication (JWT)
 
 ## Screenshots
-![Student List](img_1.png)
-![Adding Student](img_6.png)
-![Updating Student](img_7.png)
-![Student Details](img_8.png)
-![Email Validation](img_9.png)
-![Pagination Example](img_10.png)
+![Student List](images/img_1.png)
+![Adding Student](images/img_6.png)
+![Updating Student](images/img_7.png)
+![Student Details](images/img_8.png)
+![Email Validation](images/img_9.png)
+![Pagination Example](images/img_10.png)
 
 ## Setup
 Define the following environment variables before running the application (example values shown):
@@ -69,7 +69,7 @@ Common endpoints (default base: `http://localhost:8090`):
 - **Get All Students (with pagination)**:
     - `GET /api/v1/student`
     - Query params: `offset`, `pageSize`, `sortBy`
-      ![Pagination Options](img_5.png)
+      ![Pagination Options](images/img_5.png)
 
 - **Update Student**:
     - `PUT /api/v1/student/{studentId}`
