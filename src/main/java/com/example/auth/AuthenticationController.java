@@ -1,5 +1,8 @@
 package com.example.auth;
 
+import com.example.model.ForgotPasswordRequestDTO;
+import com.example.model.ResetPasswordRequestDTO;
+import com.example.service.PasswordResetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/register")
     @Operation(summary = "Method for user registration")
@@ -28,4 +32,23 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+            @RequestBody ForgotPasswordRequestDTO request) {
+
+        passwordResetService.initiateReset(request.getEmail());
+        return ResponseEntity.ok(
+                "If an account exists, you will receive a reset link."
+        );
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @RequestBody ResetPasswordRequestDTO request) {
+
+        passwordResetService.resetPassword(request);
+        return ResponseEntity.ok("Password successfully reset");
+    }
+
 }

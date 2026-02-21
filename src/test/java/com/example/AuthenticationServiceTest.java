@@ -85,7 +85,7 @@ public class AuthenticationServiceTest {
     @Test
     void testAuthenticate_Success() {
         User user = User.builder()
-                .ID(1)
+                .ID(1L)
                 .firstName("John")
                 .lastName("Doe")
                 .email("john.doe@example.com")
