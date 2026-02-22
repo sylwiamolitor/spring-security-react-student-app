@@ -3,22 +3,23 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import StudentForm from "./forms/StudentForm";
 import Card from "./forms/Card";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import studentsPic from "./studentsPic.jpg";
 import "./css/App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Popup } from './forms/Popup';
+import { Popup } from "./forms/Popup";
 import "./css/Button.css";
 import "./css/Input.css";
 import "./css/Card.css";
 
 const DashboardPage = () => {
-    const location = useLocation();
+    const navigate = useNavigate();
+
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { token: initialToken } = location.state || {};
-    const navigate = useNavigate();
+
     const [student, setStudent] = useState({
         id: "",
         email: "",
@@ -34,22 +35,19 @@ const DashboardPage = () => {
     });
     const [subregions, setSubregions] = useState([]);
     const [open, setOpen] = useState(false);
-    const [popupText, setPopupText] = useState('');
+    const [popupText, setPopupText] = useState("");
 
     const fetchStudents = async () => {
+        if (!token) return;
+
         setLoading(true);
         try {
-            if (initialToken !== "") {
-                const response = await axios.get(
-                    `api/v1/student`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${initialToken}`,
-                        },
-                    }
-                );
-                setStudents(response.data.content);
-            }
+            const response = await axios.get("/api/v1/student", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setStudents(response.data.content);
         } catch (err) {
             setError(err);
             toast.error(`Error fetching students: ${err.message}`);
@@ -60,24 +58,26 @@ const DashboardPage = () => {
     };
 
     useEffect(() => {
-        if (initialToken) {
-            fetchStudents();
+        if (!token) {
+            navigate("/");
         } else {
-            setLoading(false);
+            fetchStudents();
         }
-    }, []);
+    }, [token]);
 
     const handleStudentAction = async (method, url, data) => {
+        if (!token) {
+            toast.warning("Please login first!");
+            navigate("/");
+            return;
+        }
+
         try {
-            if (!initialToken) {
-                toast.warning("Please register and authenticate to generate token!");
-                return;
-            }
             const response = await axios({
                 method,
                 url,
                 data,
-                headers: { Authorization: `Bearer ${initialToken}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             toast.success(response.data);
             if (response.status !== 226 && response.status !== 404)
@@ -86,9 +86,7 @@ const DashboardPage = () => {
             const errorMessage =
                 error.response?.data || error.message || "An unknown error occurred";
             toast.error(
-                `${
-                    method.charAt(0).toUpperCase() + method.slice(1)
-                } failed: ${errorMessage}`
+                `${method.toUpperCase()} failed: ${errorMessage}`
             );
         }
     };
@@ -130,26 +128,19 @@ const DashboardPage = () => {
         handleStudentAction("put", `/api/v1/student/${student.id}`, student);
     };
     const handleGetRegionsByStudentId = async () => {
+        if (!token || !student.id) {
+            toast.warning("Login and provide student ID!");
+            return;
+        }
+
         try {
-            if (!initialToken) {
-                toast.warning("Please register and authenticate to generate token!");
-                return;
-            }
-            if (!student.id) {
-                toast.warning("Please fill in student id!");
-                return;
-            }
             const response = await axios.get(
                 `/api/v1/student/regionsByCountry/${student.id}`,
                 {
-                    headers: {
-                        Authorization: `Bearer ${initialToken}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            if (response.status === 200) {
-                setSubregions(response.data.pagedContent);
-            }
+            setSubregions(response.data.pagedContent);
         } catch (error) {
             console.error("There was a problem:", error);
             toast.error(
@@ -159,22 +150,21 @@ const DashboardPage = () => {
     };
 
     const fetchCountryByStudentId = async () => {
+        if (!token || !student.id) {
+            toast.warning("Login and provide student ID!");
+            return;
+        }
+
         try {
-            if (!initialToken) {
-                toast.warning("Please register and authenticate to generate token!");
-                return;
-            }
-            if (!student.id) {
-                toast.warning("Please fill in student id!");
-                return;
-            }
-            const response = await axios.get(`/api/v1/student/id/${student.id}`, {
-                headers: { Authorization: `Bearer ${initialToken}` },
-            });
-            if (response.status === 200) {
-                setOpen(true);
-                setPopupText("Country: " + response.data);
-            }
+            const response = await axios.get(
+                `/api/v1/student/id/${student.id}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            setOpen(true);
+            setPopupText("Country: " + response.data);
         } catch (err) {
             console.error(err);
             setCountry("");
@@ -182,21 +172,18 @@ const DashboardPage = () => {
         }
     };
     const handleGetStudentByEmail = async () => {
+        if (!token || !student.email) {
+            toast.warning("Login and provide student email!");
+            return;
+        }
+
         try {
-            if (!initialToken) {
-                toast.warning("Please register and authenticate to generate token!");
-                return;
-            }
-            if (!student.email) {
-                toast.warning("Please fill in student email!");
-                return;
-            }
-            const response = await axios.get(`/api/v1/student/${student.email}`, {
-                headers: {
-                    Authorization: `Bearer ${initialToken}`,
-                },
-            });
-            if (response.status === 200) {
+            const response = await axios.get(
+                `/api/v1/student/${student.email}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
                 const updatedStudent = {
                     ...student,
                     id: response.data.id || student.id,
@@ -210,13 +197,12 @@ const DashboardPage = () => {
                 setStudent(updatedStudent);
                 setOpen(true);
                 setPopupText(
-                    'Email: ' + updatedStudent.email + '\n' +
-                    'First Name: ' + updatedStudent.firstName + '\n' +
-                    'Last Name: ' + updatedStudent.lastName + '\n' +
-                    'Date of Birth: ' + updatedStudent.dateOfBirth + '\n' +
-                    'Country: ' + updatedStudent.country
-                );
-            }
+                    `Email: ${updatedStudent.email}\n` +
+                    `First Name: ${updatedStudent.firstName}\n` +
+                    `Last Name: ${updatedStudent.lastName}\n` +
+                    `Date of Birth: ${updatedStudent.dateOfBirth}\n` +
+                    `Country: ${updatedStudent.country}`
+            );
         } catch (error) {
             console.error("There was a problem:", error);
             toast.error(
@@ -227,6 +213,8 @@ const DashboardPage = () => {
         }
     };
     const handleLogout = () => {
+        localStorage.removeItem("token");
+        setToken(null);
         navigate("/");
     };
     if (loading) return <p>Loading...</p>;

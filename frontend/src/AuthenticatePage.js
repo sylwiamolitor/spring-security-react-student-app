@@ -21,22 +21,25 @@ const AuthenticatePage = () => {
                 toast.warning("Please fill in email and password!");
                 return;
             }
-            const response = await axios.post(
-                "/api/v1/auth/authenticate",
-                {
-                    email: email,
-                    password: password,
-                }
-            );
-            console.log("Authentication successful:", response.data);
-            toast.success(response.data);
+
+            const response = await axios.post("/api/v1/auth/authenticate", {
+                email,
+                password,
+            });
+
             const token = response.data.token;
-            navigate("/dashboard", { state: { token } });
+            if (!token) {
+                toast.error("Authentication failed: no token returned");
+                return;
+            }
+            localStorage.setItem("token", token);
+            toast.success("Authentication successful!");
+            navigate("/dashboard");
         } catch (error) {
             console.error(
-                "There was a problem with the authentication operation:",
+                "Authentication error:",
                 error,
-                ". Check if the account exists."
+                ". Check if account exists."
             );
             toast.error(
                 `Authentication failed: ${
@@ -45,7 +48,7 @@ const AuthenticatePage = () => {
             );
         }
     };
-    const handleLogout = () => {
+    const handleBack = () => {
         navigate("/");
     };
 
@@ -60,7 +63,7 @@ const AuthenticatePage = () => {
                     password={password}
                 />
                 <button className="pretty-button" onClick={handleAuth}>Authenticate</button>
-                <button className="pretty-button" onClick={handleLogout}>
+                <button className="pretty-button" onClick={handleBack}>
                     Back
                 </button>
             </Card>

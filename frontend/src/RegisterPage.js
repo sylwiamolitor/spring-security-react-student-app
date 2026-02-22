@@ -19,22 +19,27 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    try {
       if (!firstName || !lastName || !email || !password) {
         toast.warning("All fields are required!");
         return;
       }
 
+   try {
       const response = await axios.post("/api/v1/auth/register", {
         firstName,
         lastName,
         email,
         password,
       });
-      console.log("Registration successful:", response.data);
-      toast.success("Registration successful!");
+
       const token = response.data.token;
-      navigate("/dashboard", { state: { token } });
+      if (!token) {
+          toast.error("Registration failed: no token returned");
+          return;
+      }
+      localStorage.setItem("token", token);
+      toast.success("Registration successful!");
+      navigate("/dashboard");
     } catch (error) {
       console.error(
           "There was a problem with the registration operation:",
@@ -45,7 +50,7 @@ const RegisterPage = () => {
       );
     }
   };
-  const handleLogout = () => {
+  const handleBack = () => {
     navigate("/");
   };
 
@@ -86,7 +91,7 @@ const RegisterPage = () => {
           <button className="pretty-button" type="submit">
             Register
           </button>
-          <button className="pretty-button" onClick={handleLogout}>
+          <button className="pretty-button" onClick={handleBack}>
             Back
           </button>
         </Card>
