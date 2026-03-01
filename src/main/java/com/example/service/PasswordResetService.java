@@ -27,20 +27,20 @@ public class PasswordResetService {
 
     public void initiateReset(String email) {
 
-        userRepository.findByEmail(email).ifPresent(user -> {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
-            String rawToken = tokenGenerator.generateSecureToken();
-            String hashedToken = passwordEncoder.encode(rawToken);
+        String rawToken = tokenGenerator.generateSecureToken();
+        String hashedToken = passwordEncoder.encode(rawToken);
 
-            PasswordResetToken token = new PasswordResetToken();
-            token.setUserId(user.getID());
-            token.setTokenHash(hashedToken);
-            token.setExpiryDate(LocalDateTime.now().plusMinutes(20));
-            token.setUsed(false);
+        PasswordResetToken token = new PasswordResetToken();
+        token.setUserId(user.getID());
+        token.setTokenHash(hashedToken);
+        token.setExpiryDate(LocalDateTime.now().plusMinutes(20));
+        token.setUsed(false);
 
-            tokenRepository.save(token);
-            emailService.sendResetLink(email, rawToken);
-        });
+        tokenRepository.save(token);
+        emailService.sendResetLink(email, rawToken);
     }
 
     @Transactional

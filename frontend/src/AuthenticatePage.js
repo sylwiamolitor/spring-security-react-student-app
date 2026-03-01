@@ -52,6 +52,10 @@ const AuthenticatePage = () => {
         navigate("/");
     };
 
+    const handleForgotPassword = async () => {
+                navigate("/forgot-password");
+    };
+
     return (
         <div>
             <h2>Authenticate</h2>
@@ -63,6 +67,9 @@ const AuthenticatePage = () => {
                     password={password}
                 />
                 <button className="pretty-button" onClick={handleAuth}>Authenticate</button>
+                <button className="pretty-button" onClick={handleForgotPassword}>
+                    Forgot password?
+                </button>
                 <button className="pretty-button" onClick={handleBack}>
                     Back
                 </button>

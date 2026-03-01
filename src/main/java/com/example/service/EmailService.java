@@ -16,7 +16,7 @@ public class EmailService {
 
     public void sendResetLink(String toEmail, String token) {
 
-        String link = "https://app:8090/check-reset-password?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
+        String link = "http://frontend:3000/check-reset-password?token=" + URLEncoder.encode(token, StandardCharsets.UTF_8);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Password Reset Request");
