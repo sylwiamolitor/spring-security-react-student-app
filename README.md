@@ -30,14 +30,17 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 - Date and email format validation
 - Retrieve region/subregion data from an external API based on a student's country
 - User registration and authentication (JWT)
+- Send forgot password emails via e.g. Brevo SMTP relay
 
 ## Screenshots
-![Student List](images/img_1.png)
-![Adding Student](images/img_6.png)
-![Updating Student](images/img_7.png)
-![Student Details](images/img_8.png)
-![Email Validation](images/img_9.png)
-![Pagination Example](images/img_10.png)
+![OpenAPI](images/img_1.png)
+![First Page](images/img_6.png)
+![Register](images/img_7.png)
+![Forget Password](images/img.png)
+![Change Password](images/img_3.png)
+![Authenticate](images/img_8.png)
+![Main Page](images/img_9.png)
+![Main Page part 2](images/img_10.png)
 
 ## Setup
 Define the following environment variables before running the application (example values shown):
@@ -47,6 +50,9 @@ Define the following environment variables before running the application (examp
 - `DATABASE_PASSWORD` — e.g. `password`
 - (Optional) `DATABASE_NAME` — if your configuration expects a separate name
 - `SECRET_KEY` — secret used to sign JWTs
+- `EMAIL_HOST` - e.g. `smtp-relay.brevo.com`
+- `EMAIL_USERNAME` - e.g. `...@smtp-brevo.com`
+- `EMAIL_PASSWORD` - e.g. `password`
 
 Ensure the database is accessible and credentials are correct.
 
@@ -80,8 +86,11 @@ Common endpoints (default base: `http://localhost:8090`):
 - **Get Region and Subregion by Country**:
     - `GET /api/v1/student/regionsByCountry/{studentId}`
 
-- **Authentication / Registration endpoints**:
-    - Check your project's auth controller paths (register/authenticate)
+- **Authentication / Registration / Change password endpoints**:
+    - `POST /api/v1/auth/register"`
+    - `POST /api/v1/auth/authenticate"`
+    - `POST /api/v1/auth/forgot-password"`
+    - `POST /api/v1/auth/reset-password"`
 
 - **OpenAPI / Swagger UI**:
     - `http://localhost:8090/swagger-ui/index.html`
