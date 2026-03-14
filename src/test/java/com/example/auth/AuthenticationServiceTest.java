@@ -1,10 +1,6 @@
-package com.example;
+package com.example.auth;
 
-import com.example.auth.AuthenticationRequest;
-import com.example.auth.AuthenticationResponse;
-import com.example.auth.AuthenticationService;
-import com.example.auth.RegisterRequest;
-import com.example.config.JwtService;
+import com.example.security.JwtService;
 import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.repository.UserRepository;

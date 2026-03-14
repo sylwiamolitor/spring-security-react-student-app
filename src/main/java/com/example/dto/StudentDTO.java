@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

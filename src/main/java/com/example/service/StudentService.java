@@ -1,8 +1,8 @@
-package com.example;
+package com.example.service;
 
 import com.example.entity.Student;
-import com.example.model.ApiDTO;
-import com.example.model.RegionAndSubregionDTO;
+import com.example.dto.ApiDTO;
+import com.example.dto.RegionAndSubregionDTO;
 import com.example.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

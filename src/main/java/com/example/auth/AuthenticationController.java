@@ -1,7 +1,7 @@
 package com.example.auth;
 
-import com.example.model.ForgotPasswordRequestDTO;
-import com.example.model.ResetPasswordRequestDTO;
+import com.example.dto.ForgotPasswordRequestDTO;
+import com.example.dto.ResetPasswordRequestDTO;
 import com.example.service.PasswordResetService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

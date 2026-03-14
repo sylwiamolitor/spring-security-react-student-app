@@ -1,9 +1,9 @@
-package com.example;
+package com.example.service;
 
 import com.example.entity.Student;
-import com.example.model.ApiDTO;
-import com.example.model.NameDTO;
-import com.example.model.RegionAndSubregionDTO;
+import com.example.dto.ApiDTO;
+import com.example.dto.NameDTO;
+import com.example.dto.RegionAndSubregionDTO;
 import com.example.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

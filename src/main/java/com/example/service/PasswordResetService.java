@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.example.entity.PasswordResetToken;
 import com.example.entity.User;
-import com.example.model.ResetPasswordRequestDTO;
+import com.example.dto.ResetPasswordRequestDTO;
 import com.example.repository.PasswordResetTokenRepository;
 import com.example.repository.UserRepository;
 import com.example.util.TokenGenerator;

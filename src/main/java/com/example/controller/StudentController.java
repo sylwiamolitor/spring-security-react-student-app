@@ -1,11 +1,12 @@
-package com.example;
+package com.example.controller;
 
+import com.example.service.StudentService;
 import com.example.entity.Student;
-import com.example.mappers.StudentMapper;
-import com.example.model.ApiDTO;
-import com.example.model.PageResponseDTO;
-import com.example.model.RegionAndSubregionDTO;
-import com.example.model.StudentDTO;
+import com.example.mapper.StudentMapper;
+import com.example.dto.ApiDTO;
+import com.example.dto.PageResponseDTO;
+import com.example.dto.RegionAndSubregionDTO;
+import com.example.dto.StudentDTO;
 import io.micrometer.common.util.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
