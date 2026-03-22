@@ -43,7 +43,7 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 ![Main Page part 2](images/img_10.png)
 
 ## Setup
-Define the following environment variables before running the application (example values shown):
+Define the following environment variables in a `.env` file (you can use `.env.example` as a reference):
 
 - `DATABASE_URL` — JDBC URL, e.g. `jdbc:postgresql://localhost:5432`
 - `DATABASE_USERNAME` — e.g. `postgres`
@@ -58,7 +58,7 @@ Ensure the database is accessible and credentials are correct.
 
 To build and start the services (run from the repository root):
 ```bash
-docker compose up --build
+docker compose --env-file .env up --build
 ```
 
 ## Usage
