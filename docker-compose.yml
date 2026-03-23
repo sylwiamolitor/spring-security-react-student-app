@@ -48,9 +48,10 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     volumes:
-      - './:/frontend'
+      - './frontend:/frontend'
       - '/frontend/node_modules'
     stdin_open: true
+    tty: true
     command: npm start
     networks:
       - my-network
