@@ -81,19 +81,19 @@ public class AuthenticationServiceTest {
     @Test
     void testAuthenticate_Success() {
         User user = User.builder()
-                .ID(1L)
-                .firstName("John")
-                .lastName("Doe")
-                .email("john.doe@example.com")
-                .password("password".toCharArray())
-                .role(Role.USER)
-                .build();
+            .ID(1L)
+            .firstName("John")
+            .lastName("Doe")
+            .email("john.doe@example.com")
+            .password("password".toCharArray())
+            .role(Role.USER)
+            .build();
         String email = "john.doe@example.com";
         String password = "password";
         AuthenticationRequest request = new AuthenticationRequest(email, password);
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(new UsernamePasswordAuthenticationToken(user, null));
+            .thenReturn(new UsernamePasswordAuthenticationToken(user, null));
         when(repository.findByEmail(email)).thenReturn(Optional.of(user));
         when(jwtService.generateToken(user)).thenReturn("mockJwtToken");
 

@@ -29,12 +29,12 @@ public class AuthenticationService {
         checkIfEmailValid(request.getEmail());
 
         var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()).toCharArray())
-                .role(Role.USER)
-                .build();
+            .firstName(request.getFirstName())
+            .lastName(request.getLastName())
+            .email(request.getEmail())
+            .password(passwordEncoder.encode(request.getPassword()).toCharArray())
+            .role(Role.USER)
+            .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         user.clearSensitive();
@@ -43,8 +43,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(),
-                        request.getPassword())
+            new UsernamePasswordAuthenticationToken(request.getEmail(),
+                request.getPassword())
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);

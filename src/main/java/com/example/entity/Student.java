@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "student", uniqueConstraints = {
-        @UniqueConstraint(name = "student_email_unique", columnNames = "email")
+    @UniqueConstraint(name = "student_email_unique", columnNames = "email")
 })
 @Data
 @AllArgsConstructor
@@ -17,10 +17,10 @@ import java.time.LocalDate;
 public class Student {
     @Id
     @SequenceGenerator(name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1)
+        sequenceName = "student_sequence",
+        allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence")
+        generator = "student_sequence")
 
     @Column(name = "id", updatable = false)
     private Long id;

@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class StudentConfig {
 
     @Bean
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 }

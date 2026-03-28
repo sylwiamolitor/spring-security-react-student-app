@@ -41,21 +41,21 @@ public class StudentService {
     }
 
     public Optional<Student> getStudentByEmail(String email) {
-       return studentRepository.findByEmail(email);
+        return studentRepository.findByEmail(email);
     }
 
     public Optional<String> getCountryByStudentId(Long studentId) {
         return studentRepository.findById(studentId)
-                .map(Student::getCountry)
-                .filter(Objects::nonNull);
+            .map(Student::getCountry)
+            .filter(Objects::nonNull);
     }
 
     public Collection<RegionAndSubregionDTO> mapApiToRegion(ApiDTO[] apiObj, String country) {
         if (apiObj == null) return java.util.Collections.emptyList();
         return Arrays.stream(apiObj)
-                .filter(input -> input != null && input.name() != null && country.equals(input.name().common()))
-                .map(input -> new RegionAndSubregionDTO(input.region(), input.subregion()))
-                .collect(Collectors.toList());
+            .filter(input -> input != null && input.name() != null && country.equals(input.name().common()))
+            .map(input -> new RegionAndSubregionDTO(input.region(), input.subregion()))
+            .collect(Collectors.toList());
     }
 
     public Student addNewStudent(Student student) {

@@ -38,12 +38,12 @@ public class StudentServiceTest {
     Page<Student> studentPage;
 
     private final Student basicStudent = new Student(1L,
-            "Ewa",
-            "Test",
-            "testEwa@o2.pl",
-            LocalDate.EPOCH,
-            "Czechia",
-            Period.between(LocalDate.EPOCH, LocalDate.now()).getYears());
+        "Ewa",
+        "Test",
+        "testEwa@o2.pl",
+        LocalDate.EPOCH,
+        "Czechia",
+        Period.between(LocalDate.EPOCH, LocalDate.now()).getYears());
 
     @BeforeEach
     void setUp() {
@@ -103,12 +103,12 @@ public class StudentServiceTest {
     void givenStudent_whenAddStudent_thenAddStudentCorrectly() {
         String email = "thomas@gmail.com";
         Student newStudent = new Student(2L,
-                "Thomas",
-                "Test",
-                email,
-                LocalDate.EPOCH,
-                "Poland",
-                Period.between(LocalDate.EPOCH, LocalDate.now()).getYears());
+            "Thomas",
+            "Test",
+            email,
+            LocalDate.EPOCH,
+            "Poland",
+            Period.between(LocalDate.EPOCH, LocalDate.now()).getYears());
 
         when(studentRepository.findByEmail(email)).thenReturn(Optional.empty());
 
@@ -135,7 +135,7 @@ public class StudentServiceTest {
         String email = "testN2@o2.pl";
         LocalDate birthDate = LocalDate.of(1999, 3, 1);
         Student student = new Student(id, "Eva", "Testing", email, birthDate, "Germany",
-                Period.between(birthDate, LocalDate.now()).getYears());
+            Period.between(birthDate, LocalDate.now()).getYears());
         when(studentRepository.findById(id)).thenReturn(Optional.of(basicStudent));
 
         studentService.updateStudent(id, student);

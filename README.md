@@ -3,6 +3,7 @@
 A Spring-based application utilizing REST, DTOs, Spring Security (JWT), React, and PostgreSQL.
 
 ## Table of Contents
+
 - [General Information](#general-information)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
@@ -13,9 +14,12 @@ A Spring-based application utilizing REST, DTOs, Spring Security (JWT), React, a
 - [Room for Improvement](#room-for-improvement)
 
 ## General Information
-This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a React frontend. OpenAPI (Swagger) is used to describe and visualize the REST API.
+
+This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a React frontend. OpenAPI (Swagger) is used
+to describe and visualize the REST API.
 
 ## Technologies Used
+
 - Java / Spring Boot
 - Spring Security (JWT)
 - PostgreSQL
@@ -24,6 +28,7 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 - React
 
 ## Features
+
 - Add, update, and delete students
 - Retrieve students with pagination and sorting
 - Fetch a student by email
@@ -33,6 +38,7 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 - Send forgot password emails via e.g. Brevo SMTP relay
 
 ## Screenshots
+
 ![OpenAPI](images/img_1.png)
 ![First Page](images/img_6.png)
 ![Register](images/img_7.png)
@@ -43,6 +49,7 @@ This project demonstrates Spring, Spring Security, JPA with PostgreSQL, and a Re
 ![Main Page part 2](images/img_10.png)
 
 ## Setup
+
 Define the following environment variables in a `.env` file (you can use `.env.example` as a reference):
 
 - `DATABASE_URL` — JDBC URL, e.g. `jdbc:postgresql://localhost:5432`
@@ -57,11 +64,13 @@ Define the following environment variables in a `.env` file (you can use `.env.e
 Ensure the database is accessible and credentials are correct.
 
 To build and start the services (run from the repository root):
+
 ```bash
 docker compose --env-file .env up --build
 ```
 
 ## Usage
+
 Recommended tools: Postman or the OpenAPI/Swagger UI.
 
 Common endpoints (default base: `http://localhost:8090`):
@@ -96,8 +105,10 @@ Common endpoints (default base: `http://localhost:8090`):
     - `http://localhost:8090/swagger-ui/index.html`
 
 ## Project Status
+
 The project is currently complete.
 
 ## Room for Improvement
+
 - Improve UI polish and UX
 - Add more automated tests and CI/CD

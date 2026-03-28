@@ -28,7 +28,7 @@ public class PasswordResetService {
     public void initiateReset(String email) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
 
         String rawToken = tokenGenerator.generateSecureToken();
         String hashedToken = passwordEncoder.encode(rawToken);
@@ -47,7 +47,7 @@ public class PasswordResetService {
     public void resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) {
 
         User user = userRepository.findByEmail(resetPasswordRequestDTO.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
         PasswordResetToken token = getValidToken(user.getID(), resetPasswordRequestDTO.getToken());
 
@@ -65,16 +65,16 @@ public class PasswordResetService {
     public PasswordResetToken getValidToken(Long userId, String rawToken) {
 
         List<PasswordResetToken> tokens =
-                new ArrayList<>(tokenRepository.findByUserIdAndUsedFalse(userId));
+            new ArrayList<>(tokenRepository.findByUserIdAndUsedFalse(userId));
 
         if (tokens.isEmpty()) {
             throw new RuntimeException("No unused or unexpired password reset token found for this user");
         }
 
         return tokens.stream()
-                .filter(token -> passwordEncoder.matches(rawToken, token.getTokenHash()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Invalid password reset token"));
+            .filter(token -> passwordEncoder.matches(rawToken, token.getTokenHash()))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Invalid password reset token"));
     }
 
 }

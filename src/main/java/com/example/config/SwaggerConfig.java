@@ -19,18 +19,18 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().
-                        addList("Bearer Authentication"))
-                .components(new Components().addSecuritySchemes
-                        ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("Demo")
-                        .description("Students operation API")
-                        .version("1.0").contact(new Contact().name("Sylwia"))
-                        .license(new License().name("License of API")));
+                addList("Bearer Authentication"))
+            .components(new Components().addSecuritySchemes
+                ("Bearer Authentication", createAPIKeyScheme()))
+            .info(new Info().title("Demo")
+                .description("Students operation API")
+                .version("1.0").contact(new Contact().name("Sylwia"))
+                .license(new License().name("License of API")));
     }
 
     private SecurityScheme createAPIKeyScheme() {
         return new SecurityScheme().type(SecurityScheme.Type.HTTP)
-                .bearerFormat("JWT")
-                .scheme("bearer");
+            .bearerFormat("JWT")
+            .scheme("bearer");
     }
 }

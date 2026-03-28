@@ -8,6 +8,6 @@ import java.util.Collection;
 
 @Repository
 public interface PasswordResetTokenRepository
-        extends JpaRepository<PasswordResetToken, Long> {
+    extends JpaRepository<PasswordResetToken, Long> {
     Collection<PasswordResetToken> findByUserIdAndUsedFalse(Long userId);
 }

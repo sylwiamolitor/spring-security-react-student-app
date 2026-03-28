@@ -44,9 +44,9 @@ public class StudentController {
     @GetMapping
     @Operation(summary = "Method for getting all students in database (using pagination)")
     public ResponseEntity<Page<StudentDTO>> getStudents(
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", required = false) String sortBy
+        @RequestParam(value = "offset", required = false) Integer offset,
+        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+        @RequestParam(value = "sortBy", required = false) String sortBy
     ) {
         if (offset == null)
             offset = 0;
@@ -55,8 +55,8 @@ public class StudentController {
         if (StringUtils.isEmpty(sortBy))
             sortBy = "id";
         return ResponseEntity.ok(
-                (studentService.getStudents(PageRequest.of(offset, pageSize, Sort.by(sortBy)))
-                        .map(studentMapper::studentToStudentDTO)));
+            (studentService.getStudents(PageRequest.of(offset, pageSize, Sort.by(sortBy)))
+                .map(studentMapper::studentToStudentDTO)));
     }
 
     @GetMapping(path = "{email}")
@@ -64,7 +64,7 @@ public class StudentController {
     public ResponseEntity<StudentDTO> getStudentByEmail(@PathVariable("email") String email) {
         Optional<Student> result = studentService.getStudentByEmail(email);
         return result.map(student -> ResponseEntity.ok(studentMapper.studentToStudentDTO(student)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(path = "id/{id}")
@@ -72,7 +72,7 @@ public class StudentController {
     public ResponseEntity<String> getCountryById(@PathVariable("id") Long id) {
         Optional<String> country = studentService.getCountryByStudentId(id);
         return country.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "{studentId}")
@@ -92,10 +92,10 @@ public class StudentController {
     @GetMapping(path = "country/{country}")
     @Operation(summary = "Method for getting students by country (using pagination)")
     public ResponseEntity<Page<StudentDTO>> getStudentsByCountry(
-            @PathVariable("country") String country,
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", required = false) String sortBy
+        @PathVariable("country") String country,
+        @RequestParam(value = "offset", required = false) Integer offset,
+        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+        @RequestParam(value = "sortBy", required = false) String sortBy
     ) {
         if (offset == null)
             offset = 0;
@@ -104,16 +104,16 @@ public class StudentController {
         if (StringUtils.isEmpty(sortBy))
             sortBy = "id";
         return ResponseEntity.ok(
-                (studentService.getStudentsByCountry(country, PageRequest.of(offset, pageSize, Sort.by(sortBy)))
-                        .map(studentMapper::studentToStudentDTO)));
+            (studentService.getStudentsByCountry(country, PageRequest.of(offset, pageSize, Sort.by(sortBy)))
+                .map(studentMapper::studentToStudentDTO)));
     }
 
     @GetMapping(path = "country")
     @Operation(summary = "Method for getting students with any country (using pagination)")
     public ResponseEntity<Page<StudentDTO>> getStudentsWithCountry(
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", required = false) String sortBy
+        @RequestParam(value = "offset", required = false) Integer offset,
+        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+        @RequestParam(value = "sortBy", required = false) String sortBy
     ) {
         if (offset == null)
             offset = 0;
@@ -122,17 +122,17 @@ public class StudentController {
         if (StringUtils.isEmpty(sortBy))
             sortBy = "id";
         return ResponseEntity.ok(
-                (studentService.getStudentsWithCountry(PageRequest.of(offset, pageSize, Sort.by(sortBy)))
-                        .map(studentMapper::studentToStudentDTO)));
+            (studentService.getStudentsWithCountry(PageRequest.of(offset, pageSize, Sort.by(sortBy)))
+                .map(studentMapper::studentToStudentDTO)));
     }
 
     @GetMapping(path = "regionsByCountry/{studentId}")
     @Operation(summary = "Method for getting students' regions")
     public ResponseEntity<PageResponseDTO<RegionAndSubregionDTO>> getRegionsByStudentId(
-            @PathVariable("studentId") Long studentId,
-            @RequestParam(value = "offset", required = false) Integer offset,
-            @RequestParam(value = "pageSize", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", required = false) String sortBy) {
+        @PathVariable("studentId") Long studentId,
+        @RequestParam(value = "offset", required = false) Integer offset,
+        @RequestParam(value = "pageSize", required = false) Integer pageSize,
+        @RequestParam(value = "sortBy", required = false) String sortBy) {
         if (offset == null)
             offset = 0;
         if (pageSize == null)
@@ -156,7 +156,7 @@ public class StudentController {
         int toIndex = Math.min(fromIndex + pageSize, totalSize);
 
         return ResponseEntity.ok(new PageResponseDTO<>(regionsList.subList(fromIndex, toIndex), totalSize, pageSize,
-                offset, sortBy));
+            offset, sortBy));
     }
 
 }

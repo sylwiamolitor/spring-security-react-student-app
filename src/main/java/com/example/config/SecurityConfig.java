@@ -23,21 +23,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(requestMatcherRegistry -> {
-                    requestMatcherRegistry.requestMatchers("/api/v1/auth/**",
-                            "/swagger-ui/**",
-                            "/swagger-ui.html",
-                            "/swagger-resources/**",
-                            "/v3/api-docs/**"
-                    ).permitAll();
-                    requestMatcherRegistry.anyRequest().authenticated();
-                })
-                .sessionManagement(
-                        httpSecuritySessionManagementConfigurer ->
-                                httpSecuritySessionManagementConfigurer.sessionCreationPolicy(
-                                        SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .authorizeHttpRequests(requestMatcherRegistry -> {
+                requestMatcherRegistry.requestMatchers("/api/v1/auth/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/swagger-resources/**",
+                    "/v3/api-docs/**"
+                ).permitAll();
+                requestMatcherRegistry.anyRequest().authenticated();
+            })
+            .sessionManagement(
+                httpSecuritySessionManagementConfigurer ->
+                    httpSecuritySessionManagementConfigurer.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

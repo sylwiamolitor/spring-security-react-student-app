@@ -35,17 +35,17 @@ public class AuthenticationController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(
-            @RequestBody ForgotPasswordRequestDTO request) {
+        @RequestBody ForgotPasswordRequestDTO request) {
 
         passwordResetService.initiateReset(request.getEmail());
         return ResponseEntity.ok(
-                "If an account exists, you will receive a reset link."
+            "If an account exists, you will receive a reset link."
         );
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(
-            @RequestBody ResetPasswordRequestDTO request) {
+        @RequestBody ResetPasswordRequestDTO request) {
 
         passwordResetService.resetPassword(request);
         return ResponseEntity.ok("Password successfully reset");
