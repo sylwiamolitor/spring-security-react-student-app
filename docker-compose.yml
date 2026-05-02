@@ -42,17 +42,9 @@ services:
     build: ./frontend
     container_name: frontend
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - app
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - './frontend:/frontend'
-      - '/frontend/node_modules'
-    stdin_open: true
-    tty: true
-    command: npm start
     networks:
       - my-network
 volumes:
